@@ -2,16 +2,39 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>入口页</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>大山教育</title>
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 </head>
 
 <body>
-    <div>入口页</div>
-    <a href="page1.html">to page1</a>
-    <a href="page2.html">to page2</a>
-    <a href="page3.html">to page3</a>
-    <a href="page4.html">to page4</a>
+	<div id="app">
+		<div>
+			<div class="list-content clear">
+				<div class="list" v-for="(item, index) in arr" :key="index">{{ item.name }}</div>
+				<div v-if="arr.length < 3" class="list list-btn" @click="showModal = true">添加</div>
+			</div>
+			<el-dialog title="添加学生" :visible.sync="showModal" width="30%">
+				<el-form :model="form">
+					<el-form-item label="活动名称" label-width="100">
+						<el-input v-model="form.name" autocomplete="off"></el-input>
+					</el-form-item>
+				</el-form>
+				<div slot="footer" class="dialog-footer">
+					<el-button @click="showModal = false">取 消</el-button>
+					<el-button type="primary" @click="confirmAdd">确 定</el-button>
+				</div>
+			</el-dialog>
+			<div class="center-box">
+				<input style="border: none;display: block;text-align: center;margin-bottom: 10px;" type="text" :value="selectName || '嘿嘿~准备好了吗？'">
+				<!-- <div class="center-name">{{ selectName || '嘿嘿？你会中奖嘛' }}</div> -->
+				<el-button :disabled="!this.isCanClick" type="primary" class="select-btn" @click.native="handleSelect">抽奖</el-button>
+			</div>
+		</div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </body>
+
 </html>
