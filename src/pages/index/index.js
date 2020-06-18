@@ -37,10 +37,12 @@ var app = new Vue({
       name: ''
     },
     showModal: false,
-    selectName: '',
+    selectName: '嘿嘿',
     // 中了三次奖的次数
     gotGoldNum: 0,
-    isCanClick: true
+    isCanClick: true,
+    // 蒙层显示
+    isShowMask: false
   },
   mounted () {
   },
@@ -120,11 +122,15 @@ var app = new Vue({
         }, _rTimer)
         second += 1
         console.log('second', second)
-        if (second == 5) {
+        if (second == 3) {
           clearInterval(_timer)
           clearInterval(timer)
           this.computedSelectName()
           this.isCanClick = true
+          //展示蒙层
+          this.isShowMask = true
+          // 创建动画
+          window.requestAnimationFrame(this.createAnimate)
         }
       }, 1000)
 
@@ -156,6 +162,54 @@ var app = new Vue({
           }
         });
       }
+    },
+
+    resetMask () {
+      const topLeft = document.querySelector('.top-left')
+      const topRight = document.querySelector('.top-right')
+      const bottomRight = document.querySelector('.bottom-right')
+      const bottomLeft = document.querySelector('.bottom-left')
+      topLeft.style.left = '0'
+      topLeft.style.top = '0'
+
+      topRight.style.right = '0'
+      topRight.style.top = '0'
+
+      bottomRight.style.bottom = '0'
+      bottomRight.style.right = '0'
+
+      bottomLeft.style.bottom = '0'
+      bottomLeft.style.left = '0'
+
+      this.isShowMask = false
+
+    },
+
+    createAnimate() {
+      const topLeft = document.querySelector('.top-left')
+      const topRight = document.querySelector('.top-right')
+      const bottomRight = document.querySelector('.bottom-right')
+      const bottomLeft = document.querySelector('.bottom-left')
+
+      topLeft.style.left = '50%'
+      topLeft.style.top = '50%'
+      topLeft.style.transform = 'translate(-50%, -50%) rotate(360deg) scale(4.8)'
+      topLeft.style.transition = 'all 5s'
+
+      topRight.style.right = '50%'
+      topRight.style.top = '50%'
+      topRight.style.transform = 'translate(50%, -50%) rotate(360deg) scale(4.8)'
+      topRight.style.transition = 'all 5s'
+      
+      bottomRight.style.bottom = '50%'
+      bottomRight.style.right = '50%'
+      bottomRight.style.transform = 'translate(50%, 50%) rotate(360deg) scale(4.8)'
+      bottomRight.style.transition = 'all 5s'
+      
+      bottomLeft.style.bottom = '50%'
+      bottomLeft.style.left = '50%'
+      bottomLeft.style.transform = 'translate(-50%, 50%) rotate(360deg) scale(4.8)'
+      bottomLeft.style.transition = 'all 5s'
     }
   }
 })

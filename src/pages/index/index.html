@@ -27,9 +27,15 @@
 				</div>
 			</el-dialog>
 			<div class="center-box">
-				<input style="border: none;display: block;text-align: center;margin-bottom: 10px;" type="text" :value="selectName || '嘿嘿~准备好了吗？'">
-				<!-- <div class="center-name">{{ selectName || '嘿嘿？你会中奖嘛' }}</div> -->
-				<el-button :disabled="!this.isCanClick" type="primary" class="select-btn" @click.native="handleSelect">抽奖</el-button>
+				<div class="center-name">{{ selectName || '嘿嘿？你会中奖嘛' }}</div>
+				<el-button :disabled="!isCanClick" type="primary" class="select-btn" @click.native="handleSelect">抽奖</el-button>
+			</div>
+			<!-- 抽中后蒙层的显示 -->
+			<div v-show="isShowMask" class="mask" @click="resetMask">
+				<div class="mask-text top-left">{{ selectName }}</div>
+				<div class="mask-text top-right">{{ selectName }}</div>
+				<div class="mask-text bottom-right">{{ selectName }}</div>
+				<div class="mask-text bottom-left">{{ selectName }}</div>
 			</div>
 		</div>
 	</div>
